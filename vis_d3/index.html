@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shooting Visualization of Kobe</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+    <script src="http://thematicmapping.org/playground/d3/d3.slider/d3.slider.js"></script>
+</head>
+
+<body>
+    <div id="headline">
+        <h1>Shooting Preference and Field Goal Percentage By Season</h1>
+        <h3>Take a tour of Kobe's shot over his 20 years career, find out where is his favorite shooting area and where he has
+            higher Field Goal percentage.</h3>
+    </div>
+    <div id="control-bar">
+        <h3>Season: <span id="season_text">1996-97</span></h3>
+        <div id="year-slider"></div>
+    </div>
+
+    <div id="shot-chart-container"></div>
+
+    <div id="line-chart-all">
+        <button id="show_freq">Show Frequency</button>
+        <button id="show_percentage">Show FG %</button>
+        <div id="line-chart"></div>
+    </div>
+
+    <div id="footer">
+        <h3>Created by: Jiahui Wei</h3>
+        <h3>CMPS 263-Data Driven Discovery and Visualization-Winter 2017-Instructor: Suresh K. Lodha</h3>
+        <h3>Data Source: </h3>
+        <ul>
+            <li><a href="http://stats.nba.com">NBA STATS</a></li>
+        </ul>
+        <h3>Inspired by: </h3>
+        <ul>
+            <li><a href="http://graphics.latimes.com/kobe-every-shot-ever/">Every shot Kobe Bryant ever took</a></li>
+            <li><a href="http://grantland.com/features/how-lebron-james-transformed-game-become-highly-efficient-scoring-machine/">The Evolution of King James</a></li>
+            <li><a href="http://www.nytimes.com/interactive/2012/06/11/sports/basketball/nba-shot-analysis.html?_r=1">Where the Heat and the Thunder Hit Their Shots</a></li>
+            <li><a href="http://buckets.peterbeshai.com/app/">Buckets: NBA Shot Visualization</a></li>
+        </ul>
+        <h3>Github Repository: <a href="https://github.com/jhwei/basketball_data_vis">https://github.com/jhwei/basketball_data_vis</a></h3>
+        <h3>Files Submited</h3>
+        <ul>
+            <li>index.html</li>
+            <li>style.css</li>
+            <li>shot_analysis.js</li>
+            <li>shot_data.json</li>
+            <li>d3-shotchart-3.js</li>
+        </ul>
+    </div>
+
+    <script src="./shot_analysis.js"></script>
+    <script src="./d3-shotchart.js"></script>
+    <script>
+        var season_list = {
+            1996: "1996-97", 1997: "1997-98", 1998: "1998-99", 1999: "1999-00", 2000: "2000-01", 2001: "2001-02", 2002: "2002-03", 2003: "2003-04"
+            , 2004: "2004-05", 2005: "2005-06", 2006: "2006-07", 2007: "2007-08", 2008: "2008-09", 2009: "2009-10", 2010: "2010-11", 2011: "2011-12", 2012: "2012-13",
+            2013: "2013-14", 2014: "2014-15", 2015: "2015-16"
+        };
+        var playoff_list, teammate_list, champion_list;
+        var season = season_list[1996];
+
+        var json_parsed;
+
+        var shot_stat;  // a global
+        var shot_loc;
+        var shot_freq = [];
+        var shot_percentage = [];
+
+        var courtSelection = d3.select("#shot-chart-container");
+        var court = d3.court().width(800);
+        var shots = d3.shots().shotRenderThreshold(1).displayToolTips(true).displayType("hexbin");
+        courtSelection.call(court);
+
+        var freq_flag = true;
+        var axis_slide = d3.svg.axis().orient("top");
+
+        d3.select('#year-slider').call(
+            d3.slider().min(1996).max(2015).axis(true).step(1).value(1996).on("slide", function (evt, value) {
+                season = season_list[value];
+                d3.select('#season_text').text(season);
+                shot_stat = json_parsed.shot_stat[season];
+                shot_loc = json_parsed.shot_loc[season]
+                courtSelection.datum(shot_loc).call(shots);
+                getData(shot_stat);
+                if (freq_flag) {
+                    shotFreq();
+                }
+                else {
+                    shotPercentage();
+                }
+            })
+        );
+        d3.select("#show_freq").on("click", shotFreq);
+        d3.select("#show_percentage").on("click", shotPercentage);
+
+        d3.json("./shot_data.json", function (json) {
+            json_parsed = JSON.parse(json);
+            shot_stat = json_parsed.shot_stat[season];
+            shot_loc = json_parsed.shot_loc[season]
+            //playoff_list=json_parsed.playoff;
+            teammate_list = json_parsed.teammate;
+            //champion_list=json_parsed.champoin;
+            getData(shot_stat);
+
+            courtSelection.datum(shot_loc).call(shots);
+
+            initLine(shot_freq);
+        });
+    </script>
+</body>
+
+</html>
