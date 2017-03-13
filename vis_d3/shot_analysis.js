@@ -126,7 +126,7 @@ function initLine(shot_data) {
       .attr('cx', line.x())
       .attr('cy', line.y())
       .attr('r', 4)
-      .attr("fill", "#bbb")
+      .attr("fill", "#777")
       .attr("class", 'circles');
 }
 

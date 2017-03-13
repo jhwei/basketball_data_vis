@@ -171,13 +171,12 @@ prop{
 float:left;
 }
 
-#footer{
-    width:80%;
-    float:left;
-    margin-left:3%;
+#foot_left{
+width:55%;
+float:left;
+margin-left:2%;
 }
-
-#footer h3{
-    font-family: 'Times New Roman', Times, serif;
-    color: "#777"
+#foot_right{
+    width:40%;
+    float:right;
 }
