@@ -14,14 +14,14 @@ var yScale = d3.scale.linear().range([height - margin.top - margin.bottom, 0]);
 
 var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
-var yAxis = d3.svg.axis().scale(yScale).orient("left");
+var yAxis = d3.svg.axis().scale(yScale).orient("left").tickFormat(function(d){return d+"%"});
 
 var line = d3.svg.line().x(function(d) { return xScale(d.x); }).y(function(d) {
   return yScale(d.y);
 });
 
 var tool_tip =
-    d3.tip().attr("class", "d3-tip").offset([-10, 0]).html(function(d) {
+    d3.tip().attr("class", "d3-tip").attr("id","line-tip").offset([-10, 0]).html(function(d) {
       return "<prop>Distance: </prop><num_prop>" + d.x +
           " ft</num_prop><prop>Frequency: </prop><num_prop>" + d.y.toFixed(1) +
           "%</num_prop>";
@@ -46,7 +46,7 @@ function initLine(shot_data) {
           "translate(" + margin.left + "," + (height - margin.bottom) + ")")
       .call(xAxis)
       .append('text')
-      .text("Distance")
+      .text("Distance ft")
       .attr('transform', 'translate(' + (width / 2 - margin.left) + ', 40)');
 
   svg_line.append("g")
@@ -59,7 +59,7 @@ function initLine(shot_data) {
       .attr("class", "y_axis_text")
       .text("Frequency %")
       .attr(
-          "transform", "translate(" + (-35) + "," +
+          "transform", "translate(" + (-50) + "," +
               ((height) / 2 + margin.top) + ")rotate(-90)");
 
   svg_line.append("path")
@@ -78,7 +78,7 @@ function initLine(shot_data) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .attr("fill", "black")
       .attr("stroke-dasharray", 10 + "," + 10)
-      .attr("stroke-width", 1)
+      .attr("stroke-width", 2)
       .attr("stroke", "#ccc");
 
   svg_line.append("text")
@@ -143,7 +143,7 @@ function updateLine(shot_data, ylength) {
 
   yScale.domain([0, ylength]);
 
-  yAxis = d3.svg.axis().scale(yScale).orient("left");
+  yAxis.scale(yScale);
 
   var svg_line = d3.select("#line-chart");
 
@@ -197,7 +197,7 @@ function shotPercentage() {
       .attr("class", "y_axis_text")
       .text("Field Goal %")
       .attr(
-          "transform", "translate(" + (-35) + "," +
+          "transform", "translate(" + (-50) + "," +
               ((height) / 2 + margin.top) + ")rotate(-90)");
 
   updateLine(shot_percentage, 100);
@@ -217,7 +217,7 @@ function shotFreq() {
       .attr("class", "y_axis_text")
       .text("Frequency %")
       .attr(
-          "transform", "translate(" + (-35) + "," +
+          "transform", "translate(" + (-50) + "," +
               ((height) / 2 + margin.top) + ")rotate(-90)");
 
   updateLine(shot_freq, 40);

@@ -528,14 +528,14 @@
                 .attr("x", 34.25)
                 .attr("y", 2.5)
                 .attr("text-anchor", "end")
-                .text("low")
+                .text("0%")
                 .attr("font-size", "0.1em");
             efficiencyLegend.append("text")
                 .classed("legend-text", true)
                 .attr("x", 45.75)
                 .attr("y", 2.5)
                 .attr("text-anchor", "start")
-                .text("high")
+                .text("100%")
                 .attr("font-size", "0.1em");
             efficiencyLegend.selectAll('path')
                 .data(heatScale.range())
