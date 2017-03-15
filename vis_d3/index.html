@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Shooting Visualization of Kobe</title>
+    <title>Shot Visualization of Kobe</title>
     <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://d3js.org/d3.v3.js"></script>
     <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
@@ -11,9 +11,9 @@
 
 <body>
     <div id="headline">
-        <h1>Shooting Preference and Field Goal Percentage By Season</h1>
-        <h3>Take a tour of Kobe's shot over his 20 years career, find out where is his favorite shooting area and where he has
-            higher Field Goal percentage.</h3>
+        <h1>Kobe's Shooting Preference and Field Goal Percentage Throughout Career</h1>
+        <h3>Take a tour of Kobe's shots over his 20 years career
+            <br> Find out where his favorite shooting area is and he has higher field goal percentage.</h3>
     </div>
     <div id="control-bar">
         <h3>Season: <span id="season_text">1996-97</span></h3>
@@ -44,20 +44,21 @@
         <h3>Acknowledgements</h3>
         <ul>
             Thanks to Professor Suresh K. Lodha for his teaching and advise for this project.
-            <br> Thanks to the inspiration from <a href="http://graphics.latimes.com/kobe-every-shot-ever/">Every shot Kobe Bryant ever took</a> and <a href="http://buckets.peterbeshai.com/app">Buckets: NBA Shot Visualization</a>.
+            <br> Thanks to the inspiration from <a href="http://graphics.latimes.com/kobe-every-shot-ever/">Every shot Kobe Bryant ever took</a>            and <a href="http://buckets.peterbeshai.com/app">Buckets: NBA Shot Visualization</a>.
 
-            <br> Thanks to <a href="https://d3js.org">d3</a> and d3 plugins <a href="https://github.com/mamcmanus/d3-shotchart">d3-shotchart</a>, <a href="https://github.com/MasterMaps/d3-slider">d3-slider</a>.
+            <br> Thanks to <a href="https://d3js.org">d3</a> and d3 plugins <a href="https://github.com/mamcmanus/d3-shotchart">d3-shotchart</a>,
+            <a href="https://github.com/MasterMaps/d3-slider">d3-slider</a>.
         </ul>
     </div>
 
     <div id="foot_right">
-        <h3>Course Project for CMPS 263 Winter 2017</h3>
+        <h3>Course Project for CMPS263 Winter 2017</h3>
         <ul>
             <li>Data Driven Discovery and Visualization</li>
             <li>Instructor: Suresh K. Lodha</li>
         </ul>
         <h3>Github Repository: <a href="https://github.com/jhwei/basketball_data_vis">https://github.com/jhwei/basketball_data_vis</a></h3>
-        <h3>Files Submited</h3>
+        <h3>Files Submitted</h3>
         <ul>
             <li>index.html</li>
             <li>style.css</li>
@@ -82,7 +83,7 @@
 
         var json_parsed;
 
-        var shot_stat;  // a global
+        var shot_stat;
         var shot_loc;
         var shot_freq = [];
         var shot_percentage = [];
@@ -117,10 +118,7 @@
         d3.json("./shot_data.json", function (json) {
             json_parsed = JSON.parse(json);
             shot_stat = json_parsed.shot_stat[season];
-            shot_loc = json_parsed.shot_loc[season]
-            //playoff_list=json_parsed.playoff;
-            teammate_list = json_parsed.teammate;
-            //champion_list=json_parsed.champoin;
+            shot_loc = json_parsed.shot_loc[season];
             getData(shot_stat);
 
             courtSelection.datum(shot_loc).call(shots);

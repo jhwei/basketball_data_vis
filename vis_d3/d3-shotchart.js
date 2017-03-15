@@ -150,18 +150,18 @@
               .attr("clip-path", "url(#restricted-cut-off)")
               .attr("fill", 'none')
               .attr("stroke", "black");
-/*
-          // Add Half Court
-          svg.append("g")
-              .classed("half-court", true)
-              .append("rect")
-              .attr("width", 50)
-              .attr("height", 47)
-              .attr("x", 0)
-              .attr("y", 0)
-              .attr("stroke", "black")
-              .attr("fill", "none")
-              .attr("stroke-width", 0.5);*/
+          /*
+                    // Add Half Court
+                    svg.append("g")
+                        .classed("half-court", true)
+                        .append("rect")
+                        .attr("width", 50)
+                        .attr("height", 47)
+                        .attr("x", 0)
+                        .attr("y", 0)
+                        .attr("stroke", "black")
+                        .attr("fill", "none")
+                        .attr("stroke-width", 0.5);*/
 
           // Add 3 point arc
           var threePointArea =
@@ -305,8 +305,9 @@
 
   function shots() {
     var hexRadiusValues = [0.6, 0.9, 1.2], hexMinShotThreshold = 1,
-        heatScale = d3.scale.quantize().domain([0, 1]).range(["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"]),
-//            ['#5458A2', '#6689BB', '#FADC97', '#F08460', '#B02B48']),
+        heatScale = d3.scale.quantize().domain([0, 1]).range(
+            ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]),
+        //            ['#5458A2', '#6689BB', '#FADC97', '#F08460', '#B02B48']),
         hexRadiusScale, toolTips = true,
         hexbin = d3_hexbin.hexbin()
                      .radius(1.2)
@@ -369,7 +370,7 @@
           });
           shots.exit()
               .transition()
-              .duration(1000)
+              .duration(700)
               .attr("r", 0)
               .attr("d", hexbin.hexagon(0))
               .remove();
@@ -416,7 +417,7 @@
                     }
                   })
               .transition()
-              .duration(1000)
+              .duration(700)
               .attr("r", .5);
 
         } else if (activeDisplay === "hexbin") {
@@ -436,21 +437,28 @@
 
           shots.exit()
               .transition()
-              .duration(1000)
+              .duration(700)
               .attr("r", 0)
               .attr("d", hexbin.hexagon(0))
               .remove();
 
           if (toolTips) {
-            var tool_tip = d3.tip()
-                               .attr("class", "d3-tip")
-                               .offset([-8, 80])
-                               .html(function(d) {
-                                 return "<prop>Distance:</prop><num_prop>~"+
-                                 Math.sqrt(Math.pow((d.x-25),2)+Math.pow((d.y-42.25),2)).toFixed(1)+" ft</num_prop>"
-                                 +"<prop>Field Goal %:</prop><num_prop>" +percentFormatter(d.shootingPercentage)
-                                 +"</num_prop><prop>Shots: \ \ \  </prop><num_prop>"+d.makes+"/"+d.attempts+"</num_prop>";
-                               });
+            var tool_tip =
+                d3.tip()
+                    .attr("class", "d3-tip")
+                    .offset([-8, 80])
+                    .html(function(d) {
+                      return "<prop>Distance:</prop><num_prop>~" +
+                          Math.sqrt(
+                                  Math.pow((d.x - 25), 2) +
+                                  Math.pow((d.y - 42.25), 2))
+                              .toFixed(1) +
+                          " ft</num_prop>" +
+                          "<prop>Field Goal %:</prop><num_prop>" +
+                          percentFormatter(d.shootingPercentage) +
+                          "</num_prop><prop>Shots: \ \ \  </prop><num_prop>" +
+                          d.makes + "/" + d.attempts + "</num_prop>";
+                    });
 
             shotsGroup.call(tool_tip);
           }
@@ -464,6 +472,9 @@
               .attr("d", hexbin.hexagon(0))
               .on('mouseover',
                   function(d) {
+                    //  d3.select(this).transition().duration(50).attr('d',
+                    //  hexbin.hexagon(1.3));
+
                     if (toolTips) {
                       tool_tip.show(d);
                     }
@@ -471,13 +482,15 @@
               .on('mouseout',
                   function(d) {
                     if (toolTips) {
+                      // d3.select(this).transition().duration(50).attr('d',
+                      // hexbin.hexagon(hexRadiusScale(d.attempts)));
                       tool_tip.hide(d);
                     }
                   })
               .style("fill", "none");
-              
+
           shots.transition()
-              .duration(1000)
+              .duration(700)
               .attr(
                   "d",
                   function(d) {
@@ -485,10 +498,10 @@
                       return hexbin.hexagon(hexRadiusScale(d.attempts));
                     }
                   })
-              .style("fill", function(d) {
-                return heatScale(d.shootingPercentage);
-              })
-              .attr("opacity",0.9);
+              .style(
+                  "fill",
+                  function(d) { return heatScale(d.shootingPercentage); })
+              .attr("opacity", 0.9);
 
           // CHANGE TO USE SELECTION.EMPTY()
           if (legends.empty() === true) {
@@ -536,10 +549,10 @@
                     })
                 .attr('d', hexbin.hexagon(0))
                 .transition()
-                .duration(1000)
+                .duration(700)
                 .attr('d', hexbin.hexagon(1))
                 .style('fill', function(d) { return d; })
-                .attr("opacity",0.9);
+                .attr("opacity", 0.9);
             efficiencyLegend.selectAll("text").style("fill", function() {
               if (activeTheme === "night") {
                 return "white";
@@ -575,7 +588,7 @@
                     })
                 .attr('d', hexbin.hexagon(0))
                 .transition()
-                .duration(1000)
+                .duration(700)
                 .attr('d', function(d) { return hexbin.hexagon(d); })
                     frequencyLegend.append("text")
                 .classed("legend-text", true)

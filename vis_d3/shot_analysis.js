@@ -75,7 +75,7 @@ function initLine(shot_data) {
       .attr("x2", xScale(23.75))
       .attr("y1", yScale(0))
       .attr("y2", yScale(40))
-      .attr("transform","translate("+margin.left+","+margin.top+")")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .attr("fill", "black")
       .attr("stroke-dasharray", 10 + "," + 10)
       .attr("stroke-width", 1)
@@ -85,9 +85,10 @@ function initLine(shot_data) {
       .text("3 Point")
       .attr("x", xScale(25))
       .attr("y", yScale(35))
-      .attr("fill", "#bbb")
+      .attr("fill", "#bbb");
 
   svg_line.call(tool_tip);
+
   svg_line.append('g')
       .selectAll('circle')
       .data(shot_data)
@@ -95,8 +96,8 @@ function initLine(shot_data) {
       .append('circle')
       .on('mouseover',
           function(d) {
-            d3.select(this).transition().duration(50).attr('r', 7);
-            d3.select('.tips').style('display', 'block');
+            d3.select(this).transition().duration(30).attr('r', 7);
+
             tool_tip.show(d);
 
             var court_svg = d3.select('#shot-chart-container');
@@ -117,10 +118,9 @@ function initLine(shot_data) {
           })
       .on('mouseout',
           function(d) {
-            d3.select(this).transition().duration(50).attr('r', 4);
+            d3.select(this).transition().duration(30).attr('r', 4);
             tool_tip.hide(d);
             d3.select("#court_dis").remove();
-
           })
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .attr('cx', line.x())
@@ -149,12 +149,12 @@ function updateLine(shot_data, ylength) {
 
   svg_line.transition()
       .select(".line")  // change the line
-      .duration(750)
+      .duration(700)
       .attr("d", line(shot_data));
 
   svg_line.transition()
       .select(".y-axis")  // change the y axis
-      .duration(750)
+      .duration(700)
       .call(yAxis);
 
   svg_circle = svg_line.select("g").selectAll("circle").data(shot_data);

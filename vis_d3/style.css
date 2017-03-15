@@ -8,10 +8,10 @@
 }
 
 #headline h3{
-color:#777;
-margin-left:30%;
-margin-right:30%;
-     font-style: italic;
+    color:#777;
+    margin-left:20%;
+    margin-right:20%;
+    font-style: italic;
 }
 
 #line-chart-all{
@@ -24,8 +24,14 @@ button{
     padding:0.3em;
     font-size:15px;
     cursor:pointer;
-	text-decoration:none;
     margin-top: 8%;
+    border-radius: 0.5em;
+    -webkit-transition-duration: 0.2s; 
+    transition-duration: 0.2s;
+        
+}
+button:hover{
+    background-color: #fff;
 }
 
 #show_freq{
@@ -74,7 +80,7 @@ button{
     float:left;
     width:45%;
     margin-top: -12%;
-  margin-left: 3%;
+    margin-left: 3%;
 }
 #shot-chart-container svg {
     stroke-width: 0.2; }
@@ -141,7 +147,6 @@ button{
 .d3-slider-axis line {
     fill: none;
     stroke: #aaa;
-    shape-rendering: crispEdges;
 }
 
 .d3-slider-axis text {
@@ -155,26 +160,26 @@ button{
 }
 
 .d3-tip{
-line-height: 1;
-  font-weight: bold;
-  padding: 0.9em;
-  background: rgba(48, 48, 48, 0.8);
-  color: #fff;
-  width:13em;
-  border-radius: 1em;
+    line-height: 1;
+    font-weight: bold;
+    padding: 0.9em;
+    background: rgba(48, 48, 48, 0.8);
+    color: #fff;
+    width:13em;
+    border-radius: 1em;
 }
 
 num_prop{
-float: right;
+    float: right;
 }
 prop{
-float:left;
+    float:left;
 }
 
 #foot_left{
-width:55%;
-float:left;
-margin-left:2%;
+    width:55%;
+    float:left;
+    margin-left:2%;
 }
 #foot_right{
     width:40%;
