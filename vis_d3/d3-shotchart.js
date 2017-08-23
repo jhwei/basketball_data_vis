@@ -309,7 +309,7 @@
             ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"]),
         //            ['#5458A2', '#6689BB', '#FADC97', '#F08460', '#B02B48']),
         hexRadiusScale, toolTips = true,
-        hexbin = d3_hexbin.hexbin()
+        hexbin = d3.hexbin()
                      .radius(1.2)
                      .x(function(d) {
                        return d.key[0];

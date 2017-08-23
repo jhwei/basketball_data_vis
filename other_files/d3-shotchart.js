@@ -236,7 +236,7 @@
         heatScale = d3.scaleQuantize().domain([0, 1]).range(
             ['#5458A2', '#6689BB', '#FADC97', '#F08460', '#B02B48']),
         hexRadiusScale, toolTips = true,
-        hexbin = d3_hexbin.hexbin()
+        hexbin = d3.hexbin()
                      .radius(1.2)
                      .x(function(d) {
                        return d.key[0];
